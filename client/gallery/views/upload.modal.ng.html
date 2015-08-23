@@ -1,0 +1,27 @@
+<!--suppress ALL -->
+<md-dialog flex="100">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Add new pictures to {{ album.name }}</h2>
+        </div>
+    </md-toolbar>
+    <md-dialog-content layout-align="center center"  layout-padding>
+
+        <div id="dropzone" layout="column" layout-align="center center" ngf-drop ngf-select
+             ng-model="droppedFiles" ngf-drag-over-class="{accept:'dragover', reject:'dragover-err', delay:100}" class="drop-box"
+             ngf-multiple="true" ngf-allow-dir="false" ngf-accept="'image/*'"
+             ngf-drop-available="dropAvailable">
+            <div>Click here <em>OR</em> drag and drop pictures</div>
+        </div>
+
+        <md-content layout="row" layout-wrap>
+            <img ngf-src="file" class="thumb-preview" ng-repeat="file in droppedFiles" layout-padding>
+        </md-content>
+
+    </md-dialog-content>
+    <div class="md-actions">
+        <md-button ng-click="closeDialog()" class="md-primary">Cancel</md-button>
+        <md-button class="md-warn" ng-disabled="true" ng-show="!droppedFiles">No files</md-button>
+        <md-button class="md-primary" ng-click="addImages(droppedFiles)" ng-show="droppedFiles.length > 0">Upload</md-button>
+    </div>
+</md-dialog>

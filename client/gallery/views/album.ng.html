@@ -1,0 +1,56 @@
+<!--suppress ALL -->
+<div layout="column" layout-fill>
+    <md-content layout="column">
+
+        <div class="md-toolbar-tools" layout="row">
+            <h1>Album : {{album.name}}</h1>
+            <md-button ng-href="/gallery" >
+                <md-icon class="icon" md-svg-icon="navigation:ic_arrow_back_24px"></md-icon>
+                <md-tooltip>
+                    Back
+                </md-tooltip>
+            </md-button>
+        </div>
+
+        <div ng-show="images.length == 0" layout-padding>
+            <md-content>
+                <p>This album is empty</p>
+            </md-content>
+        </div>
+
+        <md-content ng-hide="images.length == 0" layout-padding>
+            <md-grid-list
+                    md-cols-sm="1" md-cols-md="2" md-cols-gt-md="6" md-row-height="4:3"
+                    md-gutter="8px" md-gutter-gt-sm="4px">
+                <md-grid-tile ng-repeat="image in images track by $index" class="tile md-whiteframe-z1"
+                              md-rowspan="{{randomSpan($index)}}" md-colspan="{{randomSpan($index)}}" md-colspan-sm="1">
+                    <md-grid-tile-header ng-show="album.owner == $root.currentUser._id" class="tile-header" layout="row" layout-align="end center">
+                        <md-icon class="icon" ng-click="remove(image)" md-svg-icon="action:ic_delete_24px">
+                            <md-tooltip>
+                                Delete
+                            </md-tooltip>
+                        </md-icon>
+                    </md-grid-tile-header>
+                    <img class="thumb" ng-src="{{ image.url({store: 'thumbnail'}) }}" ng-show="image.isUploaded()"
+                         ng-click="showImageModal(image)"/>
+                    <md-progress-circular md-mode="indeterminate" ng-hide="image.isUploaded()"></md-progress-circular>
+                    <md-grid-tile-footer class="tile-footer">
+                        <h3>{{image.name()}}</h3>
+                    </md-grid-tile-footer>
+                </md-grid-tile>
+            </md-grid-list>
+        </md-content>
+    </md-content>
+
+    <md-fab-speed-dial ng-show="album.owner == $root.currentUser._id" md-direction="up" class="md-fling floating-fab">
+        <md-fab-trigger ng-click="showUploadModal()">
+            <md-button aria-label="Upload pictures" class="md-fab md-accent">
+                <md-tooltip md-direction="top">Upload pictures</md-tooltip>
+                <md-icon md-svg-icon="content:ic_add_24px"></md-icon>
+            </md-button>
+        </md-fab-trigger>
+    </md-fab-speed-dial>
+
+    <p ng-hide="album.owner == $root.currentUser._id">Only the creator of this album can add or remove pictures</p>
+
+</div>

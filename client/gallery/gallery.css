@@ -1,0 +1,56 @@
+.drop-box {
+    background: #F8F8F8;
+    border: 2px dashed #DDD;
+    text-align: center;
+    vertical-align: middle;
+    padding: 15px 15px 15px 15px;
+}
+
+.drop-box.dragover {
+    border: 2px dashed rgb(96, 125, 139);
+}
+
+.drop-box.dragover-err {
+    border: 2px dashed red;
+}
+
+.thumb {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.thumb-preview {
+    width: 200px;
+    height: auto;
+}
+
+.tile:hover .tile-header {
+    display: inherit;
+}
+
+.tile:hover .tile-footer {
+    display: inherit;
+    transition:visibility 0s linear 0.5s,opacity 0.5s linear;
+}
+
+.tile-header, .tile-footer {
+    display: none;
+    transition:visibility 0s linear 0.5s,opacity 0.5s linear;
+}
+
+.tile-header .icon {
+    color: white;
+    cursor: pointer;
+}
+
+.modal-img {
+    width: 100%;
+    height: auto;
+}
+
+.floating-fab {
+    position: fixed;
+    right: 15%;
+    top: 160px;
+}

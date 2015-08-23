@@ -1,0 +1,18 @@
+<md-dialog flex="100">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>{{ image.name() }}</h2>
+        </div>
+    </md-toolbar>
+    <md-dialog-content layout-padding>
+        <a target="_blank" ng-href="{{ image.url() }}">
+            <img class="modal-img" ng-src="{{ image.url() }}">
+            <md-tooltip>
+                Open in new tab
+            </md-tooltip>
+        </a>
+    </md-dialog-content>
+    <div class="md-actions">
+        <md-button ng-click="closeDialog()" class="md-primary">Close</md-button>
+    </div>
+</md-dialog>'

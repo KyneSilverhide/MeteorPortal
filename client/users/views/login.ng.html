@@ -1,0 +1,23 @@
+<md-content layout="column" layout-padding>
+    <div ng-show="lc.error" class="login-error" flex>
+        <small>{{ lc.error }}</small>
+    </div>
+    <form layout="column" flex layout-padding layout-margin>
+        <md-input-container>
+            <md-icon md-svg-icon="content:ic_mail_24px"></md-icon>
+            <input type="email" ng-model="lc.credentials.email" placeholder="email" aria-label="email" />
+        </md-input-container>
+        <md-input-container>
+            <md-icon md-svg-icon="action:ic_lock_open_24px"></md-icon>
+            <input type="password" ng-model="lc.credentials.password"
+                   placeholder="password" aria-label="password" />
+        </md-input-container>
+        <div layout="row" layout-align="center start">
+            <md-button flex="40" class="md-raised md-primary" ng-click="lc.login()"
+                       aria-label="login">Log In</md-button>
+        </div>
+    </form>
+    <div layout="row" layout-align="space-around center">
+        <md-button ng-href="/register" class="md-primary">I want to sign up instead</md-button>
+    </div>
+</md-content>

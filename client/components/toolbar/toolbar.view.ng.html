@@ -1,0 +1,28 @@
+<md-toolbar layout="row">
+    <div class="md-toolbar-tools">
+        <md-button ng-href="/">
+            <md-icon  hide-sm md-svg-icon="action:ic_home_24px"></md-icon>
+            <span> Application Portal</span>
+        </md-button>
+        <md-button ng-href="/tasks">
+            <span> Tasks</span>
+        </md-button>
+        <md-button ng-href="/gallery">
+            <span> Gallery</span>
+        </md-button>
+        <span flex></span>
+        <md-button ng-href="/login" ng-hide="$root.currentUser">
+            <md-icon md-svg-icon="action:ic_account_box_24px"></md-icon>
+            <span hide-sm> Login</span>
+        </md-button>
+        <md-button ng-href="/register" ng-hide="$root.currentUser">
+            <md-icon md-svg-icon="action:ic_supervisor_account_24px"></md-icon>
+            <span hide-sm> Sign up</span>
+        </md-button>
+        <div ng-show="$root.currentUser" hide-sm hide-md><small>{{ prettyuser() }}</small></div>
+        <md-button ng-href="/logout" ng-show="$root.currentUser">
+            <md-icon md-svg-icon="action:ic_exit_to_app_24px"></md-icon>
+            <span hide-sm> Logout</span>
+        </md-button>
+    </div>
+</md-toolbar>

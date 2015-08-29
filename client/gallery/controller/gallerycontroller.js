@@ -21,20 +21,6 @@ angular.module('MeteorPortalApp').controller('GalleryController', ['$scope', '$m
             }
         };
 
-        $scope.remove = function (album) {
-            if(album.owner == $rootScope.currentUser._id) {
-                var confirm = $mdDialog.confirm()
-                    .title('Are you sure you want to delete the album ' + album.name + " ?")
-                    .content('This will also remove all pictures in this album')
-                    .ok('Yes !')
-                    .cancel('Cancel');
-                    //.targetEvent(ev);
-                $mdDialog.show(confirm).then(function() {
-                    $scope.albums.remove(album);
-                });
-            }
-        };
-
         $scope.openAlbum = function(album) {
             $state.go('album', { id: album._id });
         };
@@ -54,11 +40,15 @@ angular.module('MeteorPortalApp').controller('GalleryController', ['$scope', '$m
         }
     }]);
 
-angular.module('MeteorPortalApp').controller('AlbumController', ['$scope', '$meteor', '$rootScope', '$mdDialog', '$stateParams',
-    function ($scope, $meteor, $rootScope, $mdDialog, $stateParams) {
+angular.module('MeteorPortalApp').controller('AlbumController', ['$scope', '$meteor', '$rootScope', '$mdDialog', '$stateParams', '$state',
+    function ($scope, $meteor, $rootScope, $mdDialog, $stateParams, $state) {
 
         $scope.$meteorSubscribe('albums');
+
         $scope.album = $meteor.object(Albums, $stateParams.id);
+        $scope.albums = $meteor.collection(function () {
+            return Albums.find({});
+        });
 
         $scope.images = $meteor.collectionFS(function() {
             return Images.find(
@@ -66,8 +56,38 @@ angular.module('MeteorPortalApp').controller('AlbumController', ['$scope', '$met
             );
         }, false).subscribe('images');
 
-        $scope.remove = function (image) {
-            $scope.images.remove(image);
+        $scope.removeAlbum = function () {
+            if($scope.album.owner == $rootScope.currentUser._id) {
+                var confirm = $mdDialog.confirm()
+                    .title('Are you sure you want to delete the album ' + $scope.album.name + " ?")
+                    .content('This will also remove all pictures in this album')
+                    .ok('Yes !')
+                    .cancel('Cancel');
+                $mdDialog.show(confirm).then(function() {
+                    $scope.albums.remove($scope.album);
+                    $state.go('gallery');
+                });
+            }
+        };
+
+        $scope.removeAllImages = function () {
+            if($scope.album.owner == $rootScope.currentUser._id) {
+                var confirm = $mdDialog.confirm()
+                    .title('Are you sure you want to delete all pictures ?')
+                    .content('This album will be empty')
+                    .ok('Yes !')
+                    .cancel('Cancel');
+                $mdDialog.show(confirm).then(function() {
+                    $meteor.call('removeAllImages', $scope.album._id);
+                });
+            }
+        };
+
+
+        $scope.removeImage = function (image) {
+            if($scope.album.owner == $rootScope.currentUser._id) {
+                $scope.images.remove(image);
+            }
         };
 
         $scope.randomSpan = function (index) {

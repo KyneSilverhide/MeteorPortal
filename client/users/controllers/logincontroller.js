@@ -1,21 +1,32 @@
-angular.module("MeteorPortalApp").controller("LoginCtrl", ['$meteor', '$state',
-    function ($meteor, $state) {
-        var vm = this;
+angular.module("MeteorPortalApp").controller("LoginCtrl", ['$meteor', '$state', '$scope', '$stateParams',
+    function ($meteor, $state, $scope, $stateParams) {
 
-        vm.credentials = {
-            email: '',
-            password: ''
+        console.log("PARAMS : " + angular.toJson($stateParams));
+        $scope.credentials = {
+            email: $stateParams.email || '',
+            password: $stateParams.password || ''
         };
 
-        vm.error = '';
+        $scope.error = '';
 
-        vm.login = function () {
-            $meteor.loginWithPassword(vm.credentials.email, vm.credentials.password).then(
+        $scope.login = function () {
+            $meteor.loginWithPassword($scope.credentials.email, $scope.credentials.password).then(
                 function () {
                     $state.go('main');
                 },
                 function (err) {
-                    vm.error = 'Login error - ' + err;
+                    $scope.error = 'Login error - ' + err;
+                }
+            );
+        };
+
+        $scope.register = function () {
+            $meteor.createUser($scope.credentials).then(
+                function () {
+                    $state.go('main');
+                },
+                function (err) {
+                    $scope.error = 'Registration error - ' + err;
                 }
             );
         };

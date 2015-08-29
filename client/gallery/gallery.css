@@ -21,7 +21,9 @@
 }
 
 .thumb-preview {
-    width: 200px;
+    max-width:230px;
+    max-height:95px;
+    width: auto;
     height: auto;
 }
 
@@ -49,8 +51,10 @@
     height: auto;
 }
 
-.floating-fab {
-    position: fixed;
-    right: 15%;
-    top: 160px;
+md-fab-speed-dial.md-fab-top-right {
+    top: 20px;
+    right: 20px;
+    bottom: auto;
+    left: auto;
+    position: absolute;
 }

@@ -1,10 +1,12 @@
 <div layout="column" layout-fill>
     <md-content layout="column">
 
-        <div class="md-toolbar-tools" layout="row">
-            <h1 flex="33">Tasks</h1>
-            <small flex="66"> {{tasksCount.count}} tasks remaining</small>
-        </div>
+        <md-toolbar class="md-hue-2">
+            <div class="md-toolbar-tools" layout="row">
+                <h1 flex="33">Tasks</h1>
+                <small flex="66"> {{tasksCount.count}} tasks remaining</small>
+            </div>
+        </md-toolbar>
 
         <div layout="row" layout-padding ng-show="tasksCount.count > 0 || search ">
             <md-input-container flex="50">
@@ -12,10 +14,10 @@
                 <input type="Search" ng-model="search" placeholder="Search tasks...">
             </md-input-container>
             <md-input-container flex="50">
-              <md-select placeholder="Sort" ng-model="orderProperty">
-                  <md-option value="1">Ascending</md-option>
-                  <md-option value="-1">Descending</md-option>
-              </md-select>
+                <md-select placeholder="Sort" ng-model="orderProperty">
+                    <md-option value="1">Ascending</md-option>
+                    <md-option value="-1">Descending</md-option>
+                </md-select>
             </md-input-container>
         </div>
 
@@ -29,13 +31,13 @@
         <dir-pagination-controls template-url="client/components/pagination-md/pagination.ng.html"
                                  on-page-change="pageChanged(newPageNumber)"></dir-pagination-controls>
 
-        <form class="action-form" ng-submit="save()" name="form" novalidate layout="column" layout-padding
+        <form class="action-form" name="form" novalidate layout="column" layout-padding
               layout-margin>
             <div layout="row">
                 <md-input-container flex>
                     <input ng-model="newTask.name" placeholder="Add a new task">
                 </md-input-container>
-                <md-button flex="10" layout-align="end center">
+                <md-button flex="10" layout-align="end center" ng-click="save()">
                     Add
                 </md-button>
             </div>

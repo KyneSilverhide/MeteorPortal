@@ -43,7 +43,7 @@ angular.module('MeteorPortalApp').controller('TasksCtrl', ['$scope', '$meteor', 
         $scope.clearCompleted = function () {
             console.log("Clear completed tasks");
             if ($rootScope.currentUser) {
-                $meteor.call('clearCompleted', $rootScope.currentUser._id)
+                $meteor.call('clearCompleted', $rootScope.currentUser._id);
             }
         };
 

@@ -1,11 +1,17 @@
-<!--suppress ALL -->
 <div layout="column" layout-fill>
 
     <md-content layout="column">
 
-        <div class="md-toolbar-tools" layout="row">
-            <h1>Gallery</h1>
-        </div>
+        <md-toolbar class="md-hue-2">
+            <div class="md-toolbar-tools" layout="row">
+                <h1>Gallery</h1>
+            </div>
+        </md-toolbar>
+
+        <md-button ng-show="$root.currentUser" class="md-fab md-fab-top-right" aria-label="Create album" ng-click="showAlbumModal()">
+            <md-tooltip md-direction="top">Create album</md-tooltip>
+            <md-icon md-svg-icon="content:ic_add_24px"></md-icon>
+        </md-button>
 
         <div ng-show="albums.length == 0" layout-padding>
             <md-content>
@@ -14,7 +20,7 @@
         </div>
 
         <md-list ng-hide="albums.length == 0" layout-padding>
-            <md-toolbar>
+            <md-toolbar class="md-hue-4">
                 <h2 class="md-toolbar-tools">
                     <span>Private albums</span>
                 </h2>
@@ -26,13 +32,10 @@
                 <div class="md-list-item-text">
                     <h3>{{ album.name }}</h3>
                     <p>{{ album.description }}</p>
-                    <md-icon md-svg-icon="action:ic_delete_24px" ng-click="remove(album)"
-                             aria-label="Delete album" class="md-secondary md-hue-3">
-                    </md-icon>
                 </div>
             </md-list-item>
             <md-divider></md-divider>
-            <md-toolbar>
+            <md-toolbar class="md-hue-4">
                 <h2 class="md-toolbar-tools">
                     <span>Public albums</span>
                 </h2>
@@ -44,21 +47,8 @@
                 <div class="md-list-item-text">
                     <h3>{{ album.name }}</h3>
                     <p>{{ album.description }}</p>
-                    <md-icon ng-show="album.owner == $root.currentUser._id" md-svg-icon="action:ic_delete_24px" ng-click="remove(album)"
-                             aria-label="Delete album" class="md-secondary md-hue-3">
-                        <md-tooltip>Delete album</md-tooltip>
-                    </md-icon>
                 </div>
             </md-list-item>
         </md-list>
     </md-content>
-
-    <md-fab-speed-dial md-direction="up" class="md-fling floating-fab">
-        <md-fab-trigger ng-click="showAlbumModal()">
-            <md-button aria-label="Create album" class="md-fab md-accent">
-                <md-tooltip md-direction="top">Create album</md-tooltip>
-                <md-icon md-svg-icon="content:ic_add_24px"></md-icon>
-            </md-button>
-        </md-fab-trigger>
-    </md-fab-speed-dial>
 </div>

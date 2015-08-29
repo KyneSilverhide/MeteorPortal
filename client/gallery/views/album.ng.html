@@ -2,15 +2,40 @@
 <div layout="column" layout-fill>
     <md-content layout="column">
 
-        <div class="md-toolbar-tools" layout="row">
-            <h1>Album : {{album.name}}</h1>
-            <md-button ng-href="/gallery" >
-                <md-icon class="icon" md-svg-icon="navigation:ic_arrow_back_24px"></md-icon>
-                <md-tooltip>
-                    Back
-                </md-tooltip>
-            </md-button>
-        </div>
+        <md-fab-speed-dial ng-show="album.owner == $root.currentUser._id" class="md-sling md-fab-top-right" md-direction="left">
+            <md-fab-trigger>
+                <md-button aria-label="menu" class="md-fab md-warn">
+                    <md-tooltip md-direction="top">Actions</md-tooltip>
+                    <md-icon md-svg-icon="navigation:ic_menu_24px"></md-icon>
+                </md-button>
+            </md-fab-trigger>
+            <md-fab-actions>
+                <md-button aria-label="Upload images" ng-click="showUploadModal()" class="md-fab md-mini">
+                    <md-tooltip md-direction="top">Upload images</md-tooltip>
+                    <md-icon md-svg-icon="file:ic_file_upload_24px"></md-icon>
+                </md-button>
+                <md-button aria-label="Remove images" ng-click="removeAllImages()" class="md-fab md-mini">
+                    <md-tooltip md-direction="top">Remove all images</md-tooltip>
+                    <md-icon md-svg-icon="content:ic_clear_24px"></md-icon>
+                </md-button>
+                <md-button aria-label="Delete album" ng-click="removeAlbum()" class="md-fab md-mini md-warn md-hue-2">
+                    <md-tooltip md-direction="top">Delete album and images</md-tooltip>
+                    <md-icon md-svg-icon="action:ic_delete_24px"></md-icon>
+                </md-button>
+            </md-fab-actions>
+        </md-fab-speed-dial>
+
+        <md-toolbar class="md-hue-2">
+            <div class="md-toolbar-tools" layout="row">
+                <h1>Album : {{album.name}}</h1>
+                <md-button ng-href="/gallery" >
+                    <md-icon class="icon" md-svg-icon="navigation:ic_arrow_back_24px"></md-icon>
+                    <md-tooltip>
+                        Back
+                    </md-tooltip>
+                </md-button>
+            </div>
+        </md-toolbar>
 
         <div ng-show="images.length == 0" layout-padding>
             <md-content>
@@ -25,7 +50,7 @@
                 <md-grid-tile ng-repeat="image in images track by $index" class="tile md-whiteframe-z1"
                               md-rowspan="{{randomSpan($index)}}" md-colspan="{{randomSpan($index)}}" md-colspan-sm="1">
                     <md-grid-tile-header ng-show="album.owner == $root.currentUser._id" class="tile-header" layout="row" layout-align="end center">
-                        <md-icon class="icon" ng-click="remove(image)" md-svg-icon="action:ic_delete_24px">
+                        <md-icon class="icon" ng-click="removeImage(image)" md-svg-icon="action:ic_delete_24px">
                             <md-tooltip>
                                 Delete
                             </md-tooltip>
@@ -41,15 +66,6 @@
             </md-grid-list>
         </md-content>
     </md-content>
-
-    <md-fab-speed-dial ng-show="album.owner == $root.currentUser._id" md-direction="up" class="md-fling floating-fab">
-        <md-fab-trigger ng-click="showUploadModal()">
-            <md-button aria-label="Upload pictures" class="md-fab md-accent">
-                <md-tooltip md-direction="top">Upload pictures</md-tooltip>
-                <md-icon md-svg-icon="content:ic_add_24px"></md-icon>
-            </md-button>
-        </md-fab-trigger>
-    </md-fab-speed-dial>
 
     <p ng-hide="album.owner == $root.currentUser._id">Only the creator of this album can add or remove pictures</p>
 

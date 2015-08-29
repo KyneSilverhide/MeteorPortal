@@ -39,34 +39,30 @@ angular.module('MeteorPortalApp')
             .state('gallery', {
                 url: '/gallery',
                 templateUrl: 'client/gallery/views/gallery.ng.html',
-                controller: 'GalleryController',
-                resolve: {
-                    "currentUser": ["$meteor", function ($meteor) {
-                        return $meteor.requireUser();
-                    }]
-                }
+                controller: 'GalleryController'
             })
             .state('album', {
                 url: '/album/:id',
                 templateUrl: 'client/gallery/views/album.ng.html',
-                controller: 'AlbumController',
-                resolve: {
-                    "currentUser": ["$meteor", function ($meteor) {
-                        return $meteor.requireUser();
-                    }]
-                }
+                controller: 'AlbumController'
             })
             .state('login', {
                 url: '/login',
                 templateUrl: 'client/users/views/login.ng.html',
                 controller: 'LoginCtrl',
-                controllerAs: 'lc'
+                params: {
+                    email: {value: ''},
+                    password: {value: ''}
+                }
             })
             .state('register', {
                 url: '/register',
                 templateUrl: 'client/users/views/register.ng.html',
-                controller: 'RegisterCtrl',
-                controllerAs: 'rc'
+                controller: 'LoginCtrl',
+                params: {
+                    email: {value: ''},
+                    password: {value: ''}
+                }
             })
             .state('logout', {
                 url: '/logout',

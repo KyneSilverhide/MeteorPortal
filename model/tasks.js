@@ -12,9 +12,11 @@ Tasks.allow({
     }
 });
 
-Meteor.methods({
-    clearCompleted: function (userId) {
-        check(userId, String);
-        Tasks.remove({owner: userId, done: true});
-    }
-});
+if (Meteor.isServer) {
+    Meteor.methods({
+        clearCompleted: function (userId) {
+            check(userId, String);
+            Tasks.remove({owner: userId, done: true});
+        }
+    });
+}

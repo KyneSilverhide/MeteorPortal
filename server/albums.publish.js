@@ -1,3 +1,5 @@
+'use strict';
+
 Meteor.publish('albums', function (options) {
     return Albums.find({
         $or: [

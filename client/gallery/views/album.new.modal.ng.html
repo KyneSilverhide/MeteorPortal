@@ -1,0 +1,30 @@
+<md-dialog flex="100" layout-padding>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Adding new album...</h2>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <form name="albumForm">
+            <md-input-container flex>
+                <label>Name</label>
+                <input ng-model="newAlbum.name">
+            </md-input-container>
+            <md-input-container flex>
+                <label>Description</label>
+                <textarea ng-model="newAlbum.description" columns="1" md-maxlength="150"></textarea>
+            </md-input-container>
+            <md-input-container>
+                <md-switch ng-model="newAlbum.private" aria-label="Public or Private">
+                    {{ newAlbum.private ? 'Private' : 'Public' }}
+                </md-switch>
+                <small>Private albums can only be seen by their creator (you)</small>
+                <small>Public albums can be seen by everyone, but only the creator can update them, and add or remove photos</small>
+            </md-input-container>
+        </form>
+    </md-dialog-content>
+    <div class="md-actions">
+        <md-button ng-click="save()" class="md-primary">Add album</md-button>
+        <md-button ng-click="closeDialog()" class="md-warn">Cancel</md-button>
+    </div>
+</md-dialog>'

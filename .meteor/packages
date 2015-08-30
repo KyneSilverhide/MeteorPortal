@@ -15,7 +15,7 @@ accounts-password
 accounts-ui
 planettraining:material-design-icons
 cfs:standard-packages
-cfs:gridfs
 danialfarid:ng-file-upload
 cfs:graphicsmagick
 vitalets:angular-xeditable
+cfs:filesystem

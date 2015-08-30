@@ -19,3 +19,10 @@ Meteor.publish('tasks', function (options, searchString) {
         ]
     }, options);
 });
+
+Meteor.methods({
+    clearCompleted: function (userId) {
+        check(userId, String);
+        Tasks.remove({owner: userId, done: true});
+    }
+});

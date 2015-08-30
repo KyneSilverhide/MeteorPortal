@@ -1,0 +1,27 @@
+<md-dialog flex="100" layout-padding>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Editing album {{album.name}}</h2>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <form name="albumForm">
+            <md-input-container flex>
+                <label>Name</label>
+                <input ng-model="album.name">
+            </md-input-container>
+            <md-input-container flex>
+                <label>Description</label>
+                <textarea ng-model="album.description" columns="1" md-maxlength="150"></textarea>
+            </md-input-container>
+            <md-input-container>
+                <md-switch ng-model="album.private" aria-label="Public or Private">
+                    {{ album.private ? 'Private' : 'Public' }}
+                </md-switch>
+            </md-input-container>
+        </form>
+    </md-dialog-content>
+    <div class="md-actions">
+        <md-button ng-click="closeDialog()" class="md-primary">Done</md-button>
+    </div>
+</md-dialog>'

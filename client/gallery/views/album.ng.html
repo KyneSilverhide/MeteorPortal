@@ -14,6 +14,10 @@
                     <md-tooltip md-direction="top">Upload images</md-tooltip>
                     <md-icon md-svg-icon="file:ic_file_upload_24px"></md-icon>
                 </md-button>
+                <md-button aria-label="Edit album" ng-click="showAlbumEditModal()" class="md-fab md-mini">
+                    <md-tooltip md-direction="top">Edit album</md-tooltip>
+                    <md-icon md-svg-icon="image:ic_edit_24px"></md-icon>
+                </md-button>
                 <md-button aria-label="Remove images" ng-click="removeAllImages()" class="md-fab md-mini">
                     <md-tooltip md-direction="top">Remove all images</md-tooltip>
                     <md-icon md-svg-icon="content:ic_clear_24px"></md-icon>
@@ -27,7 +31,12 @@
 
         <md-toolbar class="md-hue-2">
             <div class="md-toolbar-tools" layout="row">
-                <h1>Album : {{album.name}}</h1>
+                <h1>
+                    <md-icon ng-show="album.private" md-svg-icon="action:ic_lock_24px"></md-icon>
+                    <md-icon ng-hide="album.private" md-svg-icon="action:ic_lock_open_24px"></md-icon>
+                    Album : {{album.name}}
+                </h1>
+
                 <md-button ng-href="/gallery" >
                     <md-icon class="icon" md-svg-icon="navigation:ic_arrow_back_24px"></md-icon>
                     <md-tooltip>

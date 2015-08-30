@@ -21,27 +21,27 @@ angular.module('MeteorPortalApp').controller('GalleryController', ['$scope', '$m
             }
         };
 
-        $scope.openAlbum = function(album) {
-            $state.go('album', { id: album._id });
+        $scope.openAlbum = function (album) {
+            $state.go('album', {id: album._id});
         };
 
         $scope.showAlbumModal = function () {
             $mdDialog.show({
                 controller: 'GalleryController',
                 parent: angular.element(document.body),
-                templateUrl: 'client/gallery/views/album.modal.ng.html',
+                templateUrl: 'client/gallery/views/album.new.modal.ng.html',
                 clickOutsideToClose: true
             })
         };
 
-        $scope.closeDialog = function() {
+        $scope.closeDialog = function () {
             $scope.newAlbum = {};
             $mdDialog.hide();
         }
     }]);
 
-angular.module('MeteorPortalApp').controller('AlbumController', ['$scope', '$meteor', '$rootScope', '$mdDialog', '$stateParams', '$state',
-    function ($scope, $meteor, $rootScope, $mdDialog, $stateParams, $state) {
+angular.module('MeteorPortalApp').controller('AlbumController', ['$scope', '$meteor', '$rootScope', '$mdDialog', '$stateParams', '$state', '$mdToast',
+    function ($scope, $meteor, $rootScope, $mdDialog, $stateParams, $state, $mdToast) {
 
         $scope.$meteorSubscribe('albums');
 
@@ -50,34 +50,41 @@ angular.module('MeteorPortalApp').controller('AlbumController', ['$scope', '$met
             return Albums.find({});
         });
 
-        $scope.images = $meteor.collectionFS(function() {
+        $scope.images = $meteor.collectionFS(function () {
             return Images.find(
-                {'metadata.albumId' : $stateParams.id}
+                {'metadata.albumId': $stateParams.id}
             );
         }, false).subscribe('images');
 
         $scope.removeAlbum = function () {
-            if($scope.album.owner == $rootScope.currentUser._id) {
+            if ($scope.album.owner == $rootScope.currentUser._id) {
                 var confirm = $mdDialog.confirm()
                     .title('Are you sure you want to delete the album ' + $scope.album.name + " ?")
                     .content('This will also remove all pictures in this album')
                     .ok('Yes !')
                     .cancel('Cancel');
-                $mdDialog.show(confirm).then(function() {
+                $mdDialog.show(confirm).then(function () {
                     $scope.albums.remove($scope.album);
                     $state.go('gallery');
+                    var toast = $mdToast.simple().content('Album ' + $scope.album.name + ' has been deleted')
+                        .position('top right').action('X');
+                    $mdToast.show(toast).then(function (response) {
+                        if (response == 'ok') {
+                            $mdToast.hide();
+                        }
+                    });
                 });
             }
         };
 
         $scope.removeAllImages = function () {
-            if($scope.album.owner == $rootScope.currentUser._id) {
+            if ($scope.album.owner == $rootScope.currentUser._id) {
                 var confirm = $mdDialog.confirm()
                     .title('Are you sure you want to delete all pictures ?')
                     .content('This album will be empty')
                     .ok('Yes !')
                     .cancel('Cancel');
-                $mdDialog.show(confirm).then(function() {
+                $mdDialog.show(confirm).then(function () {
                     $meteor.call('removeAllImages', $scope.album._id);
                 });
             }
@@ -85,7 +92,7 @@ angular.module('MeteorPortalApp').controller('AlbumController', ['$scope', '$met
 
 
         $scope.removeImage = function (image) {
-            if($scope.album.owner == $rootScope.currentUser._id) {
+            if ($scope.album.owner == $rootScope.currentUser._id) {
                 $scope.images.remove(image);
             }
         };
@@ -117,4 +124,15 @@ angular.module('MeteorPortalApp').controller('AlbumController', ['$scope', '$met
                 clickOutsideToClose: true
             })
         };
+
+        $scope.showAlbumEditModal = function () {
+            $mdDialog.show({
+                controller: 'AlbumController',
+                parent: angular.element(document.body),
+                templateUrl: 'client/gallery/views/album.edit.modal.ng.html',
+                clickOutsideToClose: true
+            })
+        };
+
+        $scope.closeDialog = $mdDialog.hide;
     }]);

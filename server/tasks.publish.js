@@ -3,11 +3,26 @@
 Meteor.publish('tasks', function (options, searchString) {
     searchString = searchString || '';
 
-    Counts.publish(this, 'numberOfTasks', Tasks.find({
+    Counts.publish(this, 'matchingTasks', Tasks.find({
         'name': {'$regex': '.*' + searchString || '' + '.*', '$options': 'i'},
         $and: [
             {owner: this.userId},
             {owner: {$exists: true}}
+        ]
+    }), {noReady: true});
+
+    Counts.publish(this, 'totalTasks', Tasks.find({
+        $and: [
+            {owner: this.userId},
+            {owner: {$exists: true}}
+        ]
+    }), {noReady: true});
+
+    Counts.publish(this, 'completedTasks', Tasks.find({
+        $and: [
+            {owner: this.userId},
+            {owner: {$exists: true}},
+            {done: true}
         ]
     }), {noReady: true});
 

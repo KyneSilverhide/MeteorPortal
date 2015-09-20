@@ -4,11 +4,21 @@
         <md-toolbar class="md-hue-2">
             <div class="md-toolbar-tools" layout="row">
                 <h1 flex="33">Tasks</h1>
-                <small flex="66"> {{tasksCount.count}} tasks remaining</small>
+                <small flex="66">
+                    <ng-pluralize count="completedTasksCount.count" when="{'0': 'No task',
+                     'one': '1 task',
+                     'other': '{} tasks'}">
+                    </ng-pluralize>
+                    completed on
+                    <ng-pluralize count="totalTasksCount.count" when="{'0': 'No task',
+                     'one': '1 task',
+                     'other': '{} tasks'}">
+                    </ng-pluralize>
+                </small>
             </div>
         </md-toolbar>
 
-        <div layout="row" layout-padding ng-show="tasksCount.count > 0 || search ">
+        <div layout="row" layout-padding ng-show="matchingTasksCount.count > 0 || search ">
             <md-input-container flex="50">
                 <md-icon md-svg-icon="action:ic_search_24px" class="name"></md-icon>
                 <input type="Search" ng-model="search" placeholder="Search tasks...">
@@ -22,10 +32,12 @@
         </div>
 
         <md-list>
-            <md-list-item class="md-2-line" layout="row" dir-paginate="task in tasks | itemsPerPage: perPage"
-                          total-items="tasksCount.count">
+            <md-list-item class="md-2-line disable-md-clickable todo-item" layout="row" dir-paginate="task in tasks | itemsPerPage: perPage"
+                          total-items="matchingTasksCount.count" ng-click="$event.stopPropagation()">
                 <md-checkbox type="checkbox" ng-model="task.done" aria-label="Done"></md-checkbox>
-                {{ task.name }}
+                <md-input-container class="todo-item-input">
+                    <input ng-model="task.name">
+                </md-input-container>
             </md-list-item>
         </md-list>
         <dir-pagination-controls template-url="client/components/pagination-md/pagination.ng.html"

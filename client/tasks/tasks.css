@@ -1,0 +1,7 @@
+.disable-md-clickable .md-ripple-container {
+    display: none;
+}
+
+.todo-item-input {
+    top: 8px;
+}

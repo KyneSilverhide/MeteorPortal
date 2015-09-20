@@ -4,7 +4,7 @@ angular.module('MeteorPortalApp').controller('TasksCtrl', ['$scope', '$meteor', 
     function ($scope, $meteor, $rootScope) {
 
         $scope.page = 1;
-        $scope.perPage = 5;
+        $scope.perPage = 10;
         $scope.sort = {name: 1};
         $scope.orderProperty = '1';
 
@@ -18,14 +18,18 @@ angular.module('MeteorPortalApp').controller('TasksCtrl', ['$scope', '$meteor', 
                 skip: parseInt(($scope.getReactively('page') - 1) * $scope.getReactively('perPage')),
                 sort: $scope.getReactively('sort')
             }, $scope.getReactively('search')).then(function () {
-                $scope.tasksCount = $meteor.object(Counts, 'numberOfTasks', false);
+                $scope.matchingTasksCount = $meteor.object(Counts, 'matchingTasks', false);
             });
         });
+
+        $scope.totalTasksCount = $meteor.object(Counts, 'totalTasks', false);
+        $scope.completedTasksCount = $meteor.object(Counts, 'completedTasks', false);
 
         $scope.save = function () {
             if ($rootScope.currentUser) {
                 $scope.newTask.owner = $rootScope.currentUser._id;
                 $scope.newTask.done = false;
+                $scope.newTask.createdAt = new Date();
                 console.log("Adding task " + angular.toJson($scope.newTask));
                 $scope.tasks.save($scope.newTask);
                 $scope.newTask = {};

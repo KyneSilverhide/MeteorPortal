@@ -33,30 +33,29 @@
 
         <md-list>
             <md-list-item class="md-2-line disable-md-clickable todo-item" layout="row" dir-paginate="task in tasks | itemsPerPage: perPage"
-                          total-items="matchingTasksCount.count" ng-click="$event.stopPropagation()">
+                          total-items="matchingTasksCount.count" aria-label="{{task.name}}" ng-click="$event.stopPropagation()">
                 <md-checkbox type="checkbox" ng-model="task.done" aria-label="Done"></md-checkbox>
-                <md-input-container class="todo-item-input">
-                    <input ng-model="task.name">
+                <md-input-container class="todo-item-input" flex>
+                    <input ng-model="task.name" aria-label="{{task.name}}">
                 </md-input-container>
             </md-list-item>
         </md-list>
         <dir-pagination-controls template-url="client/components/pagination-md/pagination.ng.html"
                                  on-page-change="pageChanged(newPageNumber)"></dir-pagination-controls>
 
-        <form class="action-form" name="form" novalidate layout="column" layout-padding
-              layout-margin>
+        <form class="action-form" name="form" novalidate layout="column" layout-padding layout-margin>
             <div layout="row">
                 <md-input-container flex>
-                    <input ng-model="newTask.name" placeholder="Add a new task">
+                    <input ng-model="newTask.name" placeholder="Add a new task" aria-label="Add a new task">
                 </md-input-container>
-                <md-button flex="10" layout-align="end center" ng-click="save()">
+                <md-button class="md-raised md-primary" flex="10" layout-align="end center" ng-click="save()">
                     Add
                 </md-button>
             </div>
             <div layout="row">
                 <span flex></span>
                 <md-button layout-align="end center" class="md-primary" ng-click="clearCompleted()">
-                    <md-icon md-svg-icon="navigation:check_24px" class="name"></md-icon>
+                    <md-icon md-svg-icon="navigation:ic_check_24px" class="name"></md-icon>
                     Clear completed
                 </md-button>
             </div>

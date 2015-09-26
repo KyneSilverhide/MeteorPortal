@@ -5,7 +5,7 @@ angular.module('MeteorPortalApp').controller('TasksCtrl', ['$scope', '$meteor', 
 
         $scope.page = 1;
         $scope.perPage = 10;
-        $scope.sort = {name: 1};
+        $scope.sort = [['done', 1], ['name', 1]];
         $scope.orderProperty = '1';
 
         $scope.tasks = $meteor.collection(function () {
@@ -53,7 +53,7 @@ angular.module('MeteorPortalApp').controller('TasksCtrl', ['$scope', '$meteor', 
 
         $scope.$watch('orderProperty', function () {
             if ($scope.orderProperty) {
-                $scope.sort = {name: parseInt($scope.orderProperty)};
+                $scope.sort = [['done', 1], ['name', parseInt($scope.orderProperty)]];
             }
         });
     }]);
